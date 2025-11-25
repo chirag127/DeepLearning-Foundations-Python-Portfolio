@@ -95,13 +95,10 @@ def sample_word(d):
     assert(False) # should never get here
 
 def generate():
-    for i in range(4):
-        sentence =[]
-
+    for _ in range(4):
         # initial word
         w0 = sample_word(initial)
-        sentence.append(w0)
-
+        sentence = [w0]
         # sample second word
         w1 = sample_word(second_word[w0])
         sentence.append(w1)

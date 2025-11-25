@@ -29,7 +29,7 @@ for i in range(T):
     p = data[:i].mean()
     n = i + 1 # number of samples collected so far
     std = np.sqrt(p*(1-p)/n)
-    
+
     # gaussian
     x = np.linspace(0, 1, 200)
     g = norm.pdf(x, loc=p, scale=std)
@@ -39,5 +39,5 @@ for i in range(T):
     posterior = beta.pdf(x, a=a, b=b)
     plt.plot(x, posterior, label='Beta Posterior')
     plt.legend()
-    plt.title("N = %s" % n)
+    plt.title(f"N = {n}")
     plt.show()

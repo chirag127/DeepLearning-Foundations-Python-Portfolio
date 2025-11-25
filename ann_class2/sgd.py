@@ -170,7 +170,7 @@ def main():
     test_losses_sgd = np.array(test_losses_sgd)
     test_losses_batch = np.array(test_losses_batch)
 
-    
+
     plt.plot(test_losses_full[:,0], test_losses_full[:,1], label="full")
     plt.plot(test_losses_sgd[:,0], test_losses_sgd[:,1], label="sgd")
     plt.plot(test_losses_batch[:,0], test_losses_batch[:,1], label="mini-batch")

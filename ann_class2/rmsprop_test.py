@@ -69,7 +69,7 @@ tflosses = []
 init = tf.global_variables_initializer()
 with tf.Session() as sess:
   sess.run(init)
-  for e in range(15):
+  for _ in range(15):
     _, l = sess.run([train_op, loss], feed_dict={inputs: X, targets: Y})
     tflosses.append(l)
 
@@ -90,7 +90,7 @@ def rmsprop(cost, params, lr=1e-3, decay=0.9, eps=1e-8):
 
   # keras-like
   caches = [theano.shared(np.zeros_like(p.get_value(), dtype=np.float32)) for p in params]
-  
+
   new_caches = []
   for c, g in zip(caches, grads):
     new_c = decay*c + (np.float32(1) - decay)*g*g
@@ -119,7 +119,7 @@ train_op = theano.function(
 )
 
 thlosses = []
-for e in range(15):
+for _ in range(15):
   c = train_op(X, Y)
   thlosses.append(c)
 

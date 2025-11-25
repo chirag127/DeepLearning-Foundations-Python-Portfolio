@@ -40,8 +40,8 @@ from utils import visualization_utils as vis_util
 
 # I've assumed you already ran the notebook and downloaded the model
 MODEL_NAME = 'ssd_mobilenet_v1_coco_2017_11_17'
-PATH_TO_CKPT = '%s/%s/frozen_inference_graph.pb' % (MODELS_PATH, MODEL_NAME)
-PATH_TO_LABELS = '%s/data/mscoco_label_map.pbtxt' % MODELS_PATH
+PATH_TO_CKPT = f'{MODELS_PATH}/{MODEL_NAME}/frozen_inference_graph.pb'
+PATH_TO_LABELS = f'{MODELS_PATH}/data/mscoco_label_map.pbtxt'
 NUM_CLASSES = 90
 
 
@@ -94,8 +94,8 @@ with detection_graph.as_default():
     # input_video = 'catdog'
     # input_video = 'safari'
     input_video = 'traffic'
-    video_reader = imageio.get_reader('%s.mp4' % input_video)
-    video_writer = imageio.get_writer('%s_annotated.mp4' % input_video, fps=10)
+    video_reader = imageio.get_reader(f'{input_video}.mp4')
+    video_writer = imageio.get_writer(f'{input_video}_annotated.mp4', fps=10)
 
     # loop through and process each frame
     t0 = datetime.now()
@@ -122,12 +122,12 @@ with detection_graph.as_default():
           category_index,
           use_normalized_coordinates=True,
           line_thickness=8)
-      
+
       # instead of plotting image, we write the frame to video
       video_writer.append_data(image_np)
 
     fps = n_frames / (datetime.now() - t0).total_seconds()
-    print("Frames processed: %s, Speed: %s fps" % (n_frames, fps))
+    print(f"Frames processed: {n_frames}, Speed: {fps} fps")
 
     # clean up
     video_writer.close()

@@ -63,8 +63,7 @@ def get_data():
     for fn, label in zip(('robert_frost.txt', 'edgar_allan_poe.txt'), (0, 1)):
         count = 0
         for line in open(fn):
-            line = line.rstrip()
-            if line:
+            if line := line.rstrip():
                 print(line)
                 # tokens = remove_punctuation(line.lower()).split()
                 tokens = get_tags(line)

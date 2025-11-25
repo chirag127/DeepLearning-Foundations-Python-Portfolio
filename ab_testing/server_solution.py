@@ -38,7 +38,7 @@ class Bandit:
 
     # print some helpful stats
     if self.views % 50 == 0:
-      print("%s: clks=%s, views=%s" % (self.name, self.clks, self.views))
+      print(f"{self.name}: clks={self.clks}, views={self.views}")
 
 
 # initialize bandits

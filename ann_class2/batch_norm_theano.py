@@ -103,8 +103,7 @@ def momentum_updates(cost, params, lr, mu):
     dp = theano.shared(p.get_value() * 0)
     new_dp = mu*dp - lr*g
     new_p = p + new_dp
-    updates.append((dp, new_dp))
-    updates.append((p, new_p))
+    updates.extend(((dp, new_dp), (p, new_p)))
   return updates
 
 
@@ -124,7 +123,7 @@ class ANN(object):
       h = HiddenLayerBatchNorm(M1, M2, activation)
       self.layers.append(h)
       M1 = M2
-      
+
     # final layer
     K = len(set(Y))
     h = HiddenLayer(M1, K, T.nnet.softmax)
@@ -188,7 +187,7 @@ class ANN(object):
           print("epoch:", i, "batch:", j, "n_batches:", n_batches, "cost:", c, "accuracy:", accuracy)
 
       print("Train acc:", self.score(X, Y), "Test acc:", self.score(Xtest, Ytest))
-    
+
     if show_fig:
       plt.plot(costs)
       plt.show()

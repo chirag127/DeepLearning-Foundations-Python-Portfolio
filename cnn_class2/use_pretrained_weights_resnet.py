@@ -38,11 +38,11 @@ train_path = '../large_files/fruits-360-small/Training'
 valid_path = '../large_files/fruits-360-small/Validation'
 
 # useful for getting number of files
-image_files = glob(train_path + '/*/*.jp*g')
-valid_image_files = glob(valid_path + '/*/*.jp*g')
+image_files = glob(f'{train_path}/*/*.jp*g')
+valid_image_files = glob(f'{valid_path}/*/*.jp*g')
 
 # useful for getting number of classes
-folders = glob(train_path + '/*')
+folders = glob(f'{train_path}/*')
 
 
 # look at an image for fun
@@ -154,8 +154,7 @@ def get_confusion_matrix(data_path, N):
     if len(targets) >= N:
       break
 
-  cm = confusion_matrix(targets, predictions)
-  return cm
+  return confusion_matrix(targets, predictions)
 
 
 cm = get_confusion_matrix(train_path, len(image_files))

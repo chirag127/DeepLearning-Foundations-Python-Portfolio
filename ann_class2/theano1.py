@@ -53,7 +53,7 @@ train = theano.function(inputs=[], outputs=cost, updates=[(x, x_update)])
 
 # write your own loop to call the training function.
 # it has no arguments!
-for i in range(25):
+for _ in range(25):
     cost_val = train()
     print(cost_val)
 

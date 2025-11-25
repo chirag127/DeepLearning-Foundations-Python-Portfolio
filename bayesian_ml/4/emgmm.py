@@ -40,9 +40,8 @@ def gmm(X, K, max_iter=20, smoothing=1e-2):
 
 
     costs[i] = np.log(weighted_pdfs.sum(axis=1)).sum()
-    if i > 0:
-      if np.abs(costs[i] - costs[i-1]) < 0.1:
-        break
+    if i > 0 and np.abs(costs[i] - costs[i - 1]) < 0.1:
+      break
 
   plt.plot(costs)
   plt.title("Costs")
@@ -54,9 +53,9 @@ def gmm(X, K, max_iter=20, smoothing=1e-2):
   plt.scatter(X[:,0], X[:,1], c=R.argmax(axis=1))
   plt.show()
 
-  print "pi:", pi
-  print "means:", M
-  print "covariances:", C
+  N, D = X.shape
+  N, D = X.shape
+  N, D = X.shape
   return R
 
 

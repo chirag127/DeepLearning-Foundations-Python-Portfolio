@@ -69,7 +69,7 @@ def experiment():
     # update the distribution for the bandit whose arm we just pulled
     bandits[j].update(x)
 
-    
+
 
   # print mean estimates for each bandit
   for b in bandits:

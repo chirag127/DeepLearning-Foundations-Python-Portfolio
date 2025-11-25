@@ -24,7 +24,7 @@ class IdentityBlock:
 
     self.session = None
     self.f = tf.nn.relu
-    
+
     # init main branch
     # Conv -> BN -> F() ---> Conv -> BN -> F() ---> Conv -> BN
     self.conv1 = ConvLayer(1, mi, fm_sizes[0], 1)

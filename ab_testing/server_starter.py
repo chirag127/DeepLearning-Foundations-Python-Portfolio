@@ -44,13 +44,7 @@ def get_ad():
 @app.route('/click_ad', methods=['POST'])
 def click_ad():
   result = 'OK'
-  if request.form['advertisement_id'] == 'A':
-    # TODO
-    pass
-  elif request.form['advertisement_id'] == 'B':
-    # TODO
-    pass
-  else:
+  if request.form['advertisement_id'] not in ['A', 'B']:
     result = 'Invalid Input.'
 
   # nothing to return really

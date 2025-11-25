@@ -31,12 +31,8 @@ def gram_matrix(img):
   # input is (H, W, C) (C = # feature maps)
   # we first need to convert it to (C, H*W)
   X = K.batch_flatten(K.permute_dimensions(img, (2, 0, 1)))
-  
-  # now, calculate the gram matrix
-  # gram = XX^T / N
-  # the constant is not important since we'll be weighting these
-  G = K.dot(X, K.transpose(X)) / img.get_shape().num_elements()
-  return G
+
+  return K.dot(X, K.transpose(X)) / img.get_shape().num_elements()
 
 
 def style_loss(y, t):
@@ -55,7 +51,7 @@ def minimize(fn, epochs, batch_shape):
       maxfun=20
     )
     x = np.clip(x, -127, 127)
-    print("iter=%s, loss=%s" % (i, l))
+    print(f"iter={i}, loss={l}")
     losses.append(l)
 
   print("duration:", datetime.now() - t0)

@@ -152,9 +152,7 @@ def main():
         dp_update = mu*dp - lr*g
         p_update = p + dp_update
 
-        updates.append((dp, dp_update))
-        updates.append((p, p_update))
-
+        updates.extend(((dp, dp_update), (p, p_update)))
     train = theano.function(
         inputs=[X, Y],
         updates=updates,

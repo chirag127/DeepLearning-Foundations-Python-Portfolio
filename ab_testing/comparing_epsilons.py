@@ -32,7 +32,7 @@ def run_experiment(m1, m2, m3, eps, N):
   count_suboptimal = 0
 
   data = np.empty(N)
-  
+
   for i in range(N):
     # epsilon greedy
     p = np.random.random()
@@ -61,7 +61,7 @@ def run_experiment(m1, m2, m3, eps, N):
   for b in bandits:
     print(b.m_estimate)
 
-  print("percent suboptimal for epsilon = %s:" % eps, float(count_suboptimal) / N)
+  print(f"percent suboptimal for epsilon = {eps}:", float(count_suboptimal) / N)
 
   return cumulative_average
 

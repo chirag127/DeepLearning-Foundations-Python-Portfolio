@@ -27,21 +27,20 @@ def momentum_updates(cost, params, lr, mu):
     dp = theano.shared(p.get_value() * 0)
     new_dp = mu*dp - lr*g
     new_p = p + new_dp
-    updates.append((dp, new_dp))
-    updates.append((p, new_p))
+    updates.extend(((dp, new_dp), (p, new_p)))
   return updates
 
 
 class HiddenLayer(object):
     def __init__(self, M1, M2, an_id):
-        self.id = an_id
-        self.M1 = M1
-        self.M2 = M2
-        W = np.random.randn(M1, M2) * np.sqrt(2.0 / M1)
-        b = np.zeros(M2)
-        self.W = theano.shared(W, 'W_%s' % self.id)
-        self.b = theano.shared(b, 'b_%s' % self.id)
-        self.params = [self.W, self.b]
+      self.id = an_id
+      self.M1 = M1
+      self.M2 = M2
+      W = np.random.randn(M1, M2) * np.sqrt(2.0 / M1)
+      b = np.zeros(M2)
+      self.W = theano.shared(W, f'W_{self.id}')
+      self.b = theano.shared(b, f'b_{self.id}')
+      self.params = [self.W, self.b]
 
     def forward(self, X):
         return T.nnet.relu(X.dot(self.W) + self.b)
@@ -53,73 +52,71 @@ class ANN(object):
         self.dropout_rates = p_keep
 
     def fit(self, X, Y, Xvalid, Yvalid, learning_rate=1e-2, mu=0.9, decay=0.9, epochs=10, batch_sz=100, show_fig=False):
-        X = X.astype(np.float32)
-        Y = Y.astype(np.int32)
-        Xvalid = Xvalid.astype(np.float32)
-        Yvalid = Yvalid.astype(np.int32)
+      X = X.astype(np.float32)
+      Y = Y.astype(np.int32)
+      Xvalid = Xvalid.astype(np.float32)
+      Yvalid = Yvalid.astype(np.int32)
 
-        self.rng = RandomStreams()
+      self.rng = RandomStreams()
 
-        # initialize hidden layers
-        N, D = X.shape
-        K = len(set(Y))
-        self.hidden_layers = []
-        M1 = D
-        count = 0
-        for M2 in self.hidden_layer_sizes:
-            h = HiddenLayer(M1, M2, count)
-            self.hidden_layers.append(h)
-            M1 = M2
-            count += 1
-        W = np.random.randn(M1, K) * np.sqrt(2.0 / M1)
-        b = np.zeros(K)
-        self.W = theano.shared(W, 'W_logreg')
-        self.b = theano.shared(b, 'b_logreg')
+      # initialize hidden layers
+      N, D = X.shape
+      K = len(set(Y))
+      self.hidden_layers = []
+      M1 = D
+      for count, M2 in enumerate(self.hidden_layer_sizes):
+        h = HiddenLayer(M1, M2, count)
+        self.hidden_layers.append(h)
+        M1 = M2
+      W = np.random.randn(M1, K) * np.sqrt(2.0 / M1)
+      b = np.zeros(K)
+      self.W = theano.shared(W, 'W_logreg')
+      self.b = theano.shared(b, 'b_logreg')
 
-        # collect params for later use
-        self.params = [self.W, self.b]
-        for h in self.hidden_layers:
-            self.params += h.params
+      # collect params for later use
+      self.params = [self.W, self.b]
+      for h in self.hidden_layers:
+          self.params += h.params
 
-        # set up theano functions and variables
-        thX = T.matrix('X')
-        thY = T.ivector('Y')
-        pY_train = self.forward_train(thX)
+      # set up theano functions and variables
+      thX = T.matrix('X')
+      thY = T.ivector('Y')
+      pY_train = self.forward_train(thX)
 
-        # this cost is for training
-        cost = -T.mean(T.log(pY_train[T.arange(thY.shape[0]), thY]))
-        updates = momentum_updates(cost, self.params, learning_rate, mu)
+      # this cost is for training
+      cost = -T.mean(T.log(pY_train[T.arange(thY.shape[0]), thY]))
+      updates = momentum_updates(cost, self.params, learning_rate, mu)
 
-        train_op = theano.function(
-            inputs=[thX, thY],
-            updates=updates
-        )
+      train_op = theano.function(
+          inputs=[thX, thY],
+          updates=updates
+      )
 
-        # for evaluation and prediction
-        pY_predict = self.forward_predict(thX)
-        cost_predict = -T.mean(T.log(pY_predict[T.arange(thY.shape[0]), thY]))
-        prediction = self.predict(thX)
-        cost_predict_op = theano.function(inputs=[thX, thY], outputs=[cost_predict, prediction])
+      # for evaluation and prediction
+      pY_predict = self.forward_predict(thX)
+      cost_predict = -T.mean(T.log(pY_predict[T.arange(thY.shape[0]), thY]))
+      prediction = self.predict(thX)
+      cost_predict_op = theano.function(inputs=[thX, thY], outputs=[cost_predict, prediction])
 
-        n_batches = N // batch_sz
-        costs = []
-        for i in range(epochs):
-            X, Y = shuffle(X, Y)
-            for j in range(n_batches):
-                Xbatch = X[j*batch_sz:(j*batch_sz+batch_sz)]
-                Ybatch = Y[j*batch_sz:(j*batch_sz+batch_sz)]
+      n_batches = N // batch_sz
+      costs = []
+      for i in range(epochs):
+          X, Y = shuffle(X, Y)
+          for j in range(n_batches):
+              Xbatch = X[j*batch_sz:(j*batch_sz+batch_sz)]
+              Ybatch = Y[j*batch_sz:(j*batch_sz+batch_sz)]
 
-                train_op(Xbatch, Ybatch)
+              train_op(Xbatch, Ybatch)
 
-                if j % 50 == 0:
-                    c, p = cost_predict_op(Xvalid, Yvalid)
-                    costs.append(c)
-                    e = error_rate(Yvalid, p)
-                    print("i:", i, "j:", j, "nb:", n_batches, "cost:", c, "error rate:", e)
-        
-        if show_fig:
-            plt.plot(costs)
-            plt.show()
+              if j % 50 == 0:
+                  c, p = cost_predict_op(Xvalid, Yvalid)
+                  costs.append(c)
+                  e = error_rate(Yvalid, p)
+                  print("i:", i, "j:", j, "nb:", n_batches, "cost:", c, "error rate:", e)
+
+      if show_fig:
+          plt.plot(costs)
+          plt.show()
 
     def forward_train(self, X):
         Z = X

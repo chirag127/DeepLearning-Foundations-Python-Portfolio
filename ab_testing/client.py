@@ -48,4 +48,4 @@ while i < len(a) and j < len(b):
   # log some stats
   count += 1
   if count % 50 == 0:
-    print("Seen %s ads, A: %s, B: %s" % (count, i, j))
+    print(f"Seen {count} ads, A: {i}, B: {j}")

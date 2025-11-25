@@ -103,7 +103,7 @@ class ANN(object):
                         costs.append(c)
                         e = error_rate(Yvalid, p)
                         print("i:", i, "j:", j, "nb:", n_batches, "cost:", c, "error rate:", e)
-        
+
         plt.plot(costs)
         plt.show()
 

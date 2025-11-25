@@ -73,8 +73,8 @@ class HiddenLayer(object):
         self.M1 = M1
         self.M2 = M2
         W, b = init_weight_and_bias(M1, M2)
-        self.W = theano.shared(W, 'W_%s' % self.id)
-        self.b = theano.shared(b, 'b_%s' % self.id)
+        self.W = theano.shared(W, f'W_{self.id}')
+        self.b = theano.shared(b, f'b_{self.id}')
         self.params = [self.W, self.b]
 
     def forward(self, X):

@@ -88,4 +88,4 @@ if __name__ == '__main__':
   if diff < 1e-10:
     print("Everything's great!")
   else:
-    print("diff = %s" % diff)
+    print(f"diff = {diff}")

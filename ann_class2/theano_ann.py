@@ -51,7 +51,7 @@ class ANN(object):
             h = HiddenLayer(M1, M2, activation)
             self.layers.append(h)
             M1 = M2
-        
+
         # final layer
         K = len(set(Y))
         # print("K:", K)
@@ -110,7 +110,7 @@ class ANN(object):
                 costs.append(c)
                 if (j+1) % print_period == 0:
                     print("i:", i, "j:", j, "nb:", n_batches, "cost:", c)
-        
+
         if show_fig:
             plt.plot(costs)
             plt.show()

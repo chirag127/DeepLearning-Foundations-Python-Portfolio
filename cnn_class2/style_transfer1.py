@@ -45,12 +45,7 @@ def VGG16_AvgPool(shape):
   i = vgg.input
   x = i
   for layer in vgg.layers:
-    if layer.__class__ == MaxPooling2D:
-      # replace it with average pooling
-      x = AveragePooling2D()(x)
-    else:
-      x = layer(x)
-
+    x = AveragePooling2D()(x) if layer.__class__ == MaxPooling2D else layer(x)
   return Model(i, x)
 
 def VGG16_AvgPool_CutOff(shape, num_convs):

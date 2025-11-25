@@ -22,9 +22,9 @@ def marginal(x, c, m, a, B):
   k1top = np.linalg.det(B + (c/(1+c)*np.outer(x - m, x - m)))**(-(a + 1.0)/2.0)
   k1bot = np.linalg.det(B)**(-a/2.0)
   k1 = k1top/k1bot
-  k2log = 0
-  for d in xrange(D):
-    k2log += np.log(gamma( (a+1.0)/2.0 + (1.0-d)/2.0 )) - np.log(gamma( a/2.0 + (1.0-d)/2.0 ))
+  k2log = sum(
+      np.log(gamma((a + 1.0) / 2.0 + (1.0 - d) / 2.0)) -
+      np.log(gamma(a / 2.0 + (1.0 - d) / 2.0)) for d in xrange(D))
   k2 = np.exp(k2log)
   return k0*k1*k2
 

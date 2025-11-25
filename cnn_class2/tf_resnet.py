@@ -192,7 +192,7 @@ class TFResNet:
   def set_session(self, session):
     self.session = session
     for layer in self.layers:
-      if isinstance(layer, ConvBlock) or isinstance(layer, IdentityBlock):
+      if isinstance(layer, (ConvBlock, IdentityBlock)):
         layer.set_session(session)
       else:
         layer.session = session
@@ -257,4 +257,4 @@ if __name__ == '__main__':
   if diff < 1e-10:
     print("Everything's great!")
   else:
-    print("diff = %s" % diff)
+    print(f"diff = {diff}")

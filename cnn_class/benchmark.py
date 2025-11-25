@@ -62,7 +62,7 @@ def get_data():
 
 def main():
     train, test = get_data()
-    
+
 
     # Need to scale! don't leave as 0..255
     # Y is a N x 1 matrix with values 1..10 (MATLAB indexes by 1)

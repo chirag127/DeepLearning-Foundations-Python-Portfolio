@@ -45,8 +45,7 @@ def get_p_value(T):
   # same as scipy.stats.chi2_contingency(T, correction=False)
   det = T[0,0]*T[1,1] - T[0,1]*T[1,0]
   c2 = float(det) / T[0].sum() * det / T[1].sum() * T.sum() / T[:,0].sum() / T[:,1].sum()
-  p = 1 - chi2.cdf(x=c2, df=1)
-  return p
+  return 1 - chi2.cdf(x=c2, df=1)
 
 
 def run_experiment(p1, p2, N):
@@ -58,10 +57,7 @@ def run_experiment(p1, p2, N):
     T[0,c1] += 1
     T[1,c2] += 1
     # ignore the first 10 values
-    if i < 10:
-      p_values[i] = None
-    else:
-      p_values[i] = get_p_value(T)
+    p_values[i] = None if i < 10 else get_p_value(T)
   plt.plot(p_values)
   plt.plot(np.ones(N)*0.05)
   plt.show()

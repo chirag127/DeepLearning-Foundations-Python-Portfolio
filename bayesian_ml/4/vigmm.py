@@ -50,7 +50,7 @@ def get_cost(X, K, cluster_assignments, phi, alphas, mu_means, mu_covs, a, B, or
       inside += -diff_ij.dot(Elambda[j]).dot(diff_ij) - np.trace(Elambda[j].dot(mu_covs[j]))
       # inside += Elnpi[j]
       total += phi[i,j]*(0.5*inside + Elnpi[j])
-  
+
 
   # E{lnp(mu)} - based on original prior
   for j in xrange(K):

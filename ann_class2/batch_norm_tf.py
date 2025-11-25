@@ -101,7 +101,7 @@ class ANN(object):
       h = HiddenLayerBatchNorm(M1, M2, activation)
       self.layers.append(h)
       M1 = M2
-      
+
     # final layer
     K = len(set(Y))
     h = HiddenLayer(M1, K, lambda x: x)
@@ -160,7 +160,7 @@ class ANN(object):
           # print('dbg:', self.session.run(self.layers[0].running_mean).sum())
 
       print("Train acc:", self.score(X, Y), "Test acc:", self.score(Xtest, Ytest))
-    
+
     if show_fig:
       plt.plot(costs)
       plt.show()

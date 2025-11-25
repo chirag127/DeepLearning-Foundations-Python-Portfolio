@@ -45,8 +45,7 @@ def forward(X, W1, b1, W2, b2):
     # Z = np.maximum(X.dot(W1) + b1, 0) # relu
     A = Z.dot(W2) + b2
     expA = np.exp(A)
-    Y = expA / expA.sum(axis=1, keepdims=True)
-    return Y
+    return expA / expA.sum(axis=1, keepdims=True)
 
 # determine the classification rate
 # num correct / num total

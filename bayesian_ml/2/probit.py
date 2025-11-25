@@ -38,9 +38,9 @@ class ProbitRegression:
       self.w = np.linalg.solve(A, b)
 
       if show_w and t in show_w:
-        plot_image(self.w, Q, "iteration: %s" % (t+1))
+        plot_image(self.w, Q, f"iteration: {t + 1}")
 
-        
+
     plt.plot(costs)
     plt.show()
 
@@ -82,10 +82,9 @@ class ProbitRegression:
       dist = np.abs(p - 0.5)
       if len(sl) < 3:
         sl.add( (dist, n) )
-      else:
-        if dist < sl[-1][0]:
-          del sl[-1]
-          sl.add( (dist, n) )
+      elif dist < sl[-1][0]:
+        del sl[-1]
+        sl.add( (dist, n) )
     indexes = [v for k, v in sl]
     return X[indexes], Y[indexes]
 
@@ -103,26 +102,24 @@ if __name__ == '__main__':
   Ytest = pd.read_csv('ytest.csv', header=None).as_matrix().flatten()
   model = ProbitRegression()
   model.fit(Xtrain, Ytrain)
-  print "train accuracy:", model.score(Xtrain, Ytrain)
-  print "test accuracy:", model.score(Xtest, Ytest)
-
+  Xtrain = pd.read_csv('Xtrain.csv', header=None).as_matrix()
+  Xtrain = pd.read_csv('Xtrain.csv', header=None).as_matrix()
   # confusion matrix
   M = model.confusion_matrix(Xtest, Ytest)
-  print "confusion matrix:"
-  print M
-  print "N:", len(Ytest)
-  print "sum(M):", M.sum()
-
+  Xtrain = pd.read_csv('Xtrain.csv', header=None).as_matrix()
+  Xtrain = pd.read_csv('Xtrain.csv', header=None).as_matrix()
+  Xtrain = pd.read_csv('Xtrain.csv', header=None).as_matrix()
+  Xtrain = pd.read_csv('Xtrain.csv', header=None).as_matrix()
   # plot 3 misclassified
   Q = pd.read_csv('Q.csv', header=None).as_matrix()
   misclassified, targets, predictions = model.get_3_misclassified(Xtrain, Ytrain)
   for x, y, p in zip(misclassified, targets, predictions):
-    plot_image(x, Q, 'misclassified target=%s prediction=%s' % (y, int(p)))
+    plot_image(x, Q, f'misclassified target={y} prediction={int(p)}')
 
   # ambiguous
   ambiguous, targets = model.get_3_most_ambiguous(Xtrain, Ytrain)
   for x, y in zip(ambiguous, targets):
-    plot_image(x, Q, 'ambiguous target=%s' % y)
+    plot_image(x, Q, f'ambiguous target={y}')
 
   # show w
-  model.fit(Xtrain, Ytrain, show_w=set([0, 4, 9, 24, 49, 99]), Q=Q)
+  model.fit(Xtrain, Ytrain, show_w={0, 4, 9, 24, 49, 99}, Q=Q)

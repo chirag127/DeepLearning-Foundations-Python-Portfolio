@@ -143,7 +143,7 @@ for i in range(epochs):
     Ybatch = Ytrain[j*batch_size:(j+1)*batch_size]
     cost += train(model, loss, optimizer, Xbatch, Ybatch)
 
-  
+
   # we could have also calculated the train cost here
   # but I wanted to show you that we could also return it
   # from the train function itself

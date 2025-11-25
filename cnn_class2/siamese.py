@@ -28,9 +28,8 @@ N = len(files)
 
 
 def load_img(filepath):
-  # load image and downsample
-  img = image.img_to_array(image.load_img(filepath, target_size=[60, 80])).astype('uint8')
-  return img
+  return image.img_to_array(image.load_img(
+      filepath, target_size=[60, 80])).astype('uint8')
 
 
 
@@ -128,25 +127,19 @@ train_negatives = []
 test_positives = []
 test_negatives = []
 
-for label, indices in train_label2idx.items():
+for indices in train_label2idx.values():
   # all indices that do NOT belong to this subject
   other_indices = set(range(n_train)) - set(indices)
 
   for i, idx1 in enumerate(indices):
-    for idx2 in indices[i+1:]:
-      train_positives.append((idx1, idx2))
-
-    for idx2 in other_indices:
-      train_negatives.append((idx1, idx2))
-
+    train_positives.extend((idx1, idx2) for idx2 in indices[i+1:])
+    train_negatives.extend((idx1, idx2) for idx2 in other_indices)
 for label, indices in test_label2idx.items():
   # all indices that do NOT belong to this subject
   other_indices = set(range(n_test)) - set(indices)
 
   for i, idx1 in enumerate(indices):
-    for idx2 in indices[i+1:]:
-      test_positives.append((idx1, idx2))
-
+    test_positives.extend((idx1, idx2) for idx2 in indices[i+1:])
     for idx2 in other_indices:
       test_negatives.append((idx1, idx2))
 
@@ -156,7 +149,7 @@ def train_generator():
   # for each batch, we will send 1 pair of each subject
   # and the same number of non-matching pairs
   n_batches = int(np.ceil(len(train_positives) / batch_size))
-  
+
   while True:
     np.random.shuffle(train_positives)
 

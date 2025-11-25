@@ -66,8 +66,7 @@ class NB:
         probability_matrix[:,d] = pdf_d
       posteriors_c = np.prod(probability_matrix, axis=1)*self.pyy[c]
       posteriors[:,c] = posteriors_c
-    P = posteriors[:,1] / np.sum(posteriors, axis=1)
-    return P
+    return posteriors[:,1] / np.sum(posteriors, axis=1)
 
   def predict(self, X):
     return np.round(self.predict_proba(X))
@@ -99,10 +98,9 @@ class NB:
       dist = np.abs(p - 0.5)
       if len(sl) < 3:
         sl.add( (dist, n) )
-      else:
-        if dist < sl[-1][0]:
-          del sl[-1]
-          sl.add( (dist, n) )
+      elif dist < sl[-1][0]:
+        del sl[-1]
+        sl.add( (dist, n) )
     indexes = [v for k, v in sl]
     return X[indexes], Y[indexes]
 
@@ -120,23 +118,21 @@ if __name__ == '__main__':
   Ytest = pd.read_csv('ytest.csv', header=None).as_matrix().flatten()
   model = NB()
   model.fit(Xtrain, Ytrain)
-  print "train accuracy:", model.score(Xtrain, Ytrain)
-  print "test accuracy:", model.score(Xtest, Ytest)
-
+  Xtrain = pd.read_csv('Xtrain.csv', header=None).as_matrix()
+  Xtrain = pd.read_csv('Xtrain.csv', header=None).as_matrix()
   # confusion matrix
   M = model.confusion_matrix(Xtest, Ytest)
-  print "confusion matrix:"
-  print M
-  print "N:", len(Ytest)
-  print "sum(M):", M.sum()
-
+  Xtrain = pd.read_csv('Xtrain.csv', header=None).as_matrix()
+  Xtrain = pd.read_csv('Xtrain.csv', header=None).as_matrix()
+  Xtrain = pd.read_csv('Xtrain.csv', header=None).as_matrix()
+  Xtrain = pd.read_csv('Xtrain.csv', header=None).as_matrix()
   # plot 3 misclassified
   Q = pd.read_csv('Q.csv', header=None).as_matrix()
   misclassified, targets, predictions = model.get_3_misclassified(Xtrain, Ytrain)
   for x, y, p in zip(misclassified, targets, predictions):
-    plot_image(x, Q, 'misclassified target=%s prediction=%s' % (y, int(p)))
+    plot_image(x, Q, f'misclassified target={y} prediction={int(p)}')
 
   # ambiguous
   ambiguous, targets = model.get_3_most_ambiguous(Xtrain, Ytrain)
   for x, y in zip(ambiguous, targets):
-    plot_image(x, Q, 'ambiguous target=%s' % y)
+    plot_image(x, Q, f'ambiguous target={y}')

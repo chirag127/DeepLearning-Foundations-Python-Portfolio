@@ -57,7 +57,7 @@ def big_init():
 def get_signals(N=20, T=100, init=big_init):
     M, K, D, pi, A, R, mu, sigma = init()
     X = []
-    for n in range(N):
+    for _ in range(N):
         x = np.zeros((T, D))
         s = 0 # initial state is 0 since pi[0] = 1
         r = np.random.choice(K, p=R[s]) # choose mixture

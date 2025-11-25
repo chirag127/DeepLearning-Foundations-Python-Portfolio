@@ -13,7 +13,7 @@ lam = 1.0
 sigma = 1.0
 D = 2
 K = 3
-sigmaI = sigma * sigma * np.eye(D)
+sigmaI = sigma**2 * np.eye(D)
 
 # generate the data
 Z = np.random.randn(N, K)

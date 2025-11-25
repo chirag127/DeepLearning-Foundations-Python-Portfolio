@@ -30,7 +30,7 @@ def random_search():
   log_lr = -4
   log_l2 = -2 # since we always want it to be positive
   max_tries = 30
-  
+
 
   # loop through all possible hyperparameter settings
   best_validation_rate = 0

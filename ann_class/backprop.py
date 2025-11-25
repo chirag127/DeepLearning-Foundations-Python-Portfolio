@@ -38,33 +38,9 @@ def derivative_w2(Z, T, Y):
     N, K = T.shape
     M = Z.shape[1] # H is (N, M)
 
-    # # slow
-    # ret1 = np.zeros((M, K))
-    # for n in xrange(N):
-    #     for m in xrange(M):
-    #         for k in xrange(K):
-    #             ret1[m,k] += (T[n,k] - Y[n,k])*Z[n,m]
-
-    # # a bit faster - let's not loop over m
-    # ret2 = np.zeros((M, K))
-    # for n in xrange(N):
-    #     for k in xrange(K):
-    #         ret2[:,k] += (T[n,k]* - Y[n,k])*Z[n,:]
-
-    # assert(np.abs(ret1 - ret2).sum() < 0.00001)
-
-    # # even faster  - let's not loop over k either
-    # ret3 = np.zeros((M, K))
-    # for n in xrange(N): # slow way first
-    #     ret3 += np.outer( Z[n], T[n] - Y[n] )
-
-    # assert(np.abs(ret1 - ret3).sum() < 0.00001)
-
-    # fastest - let's not loop over anything
-    ret4 = Z.T.dot(T - Y)
     # assert(np.abs(ret1 - ret4).sum() < 0.00001)
 
-    return ret4
+    return Z.T.dot(T - Y)
 
 
 def derivative_w1(X, Z, T, Y, W2):
@@ -81,11 +57,9 @@ def derivative_w1(X, Z, T, Y, W2):
 
     # fastest
     dZ = (T - Y).dot(W2.T) * Z * (1 - Z)
-    ret2 = X.T.dot(dZ)
-
     # assert(np.abs(ret1 - ret2).sum() < 0.00001)
 
-    return ret2
+    return X.T.dot(dZ)
 
 
 def derivative_b2(T, Y):

@@ -35,5 +35,5 @@ mkdir(valid_path_to)
 
 
 for c in classes:
-  link(train_path_from + '/' + c, train_path_to + '/' + c)
-  link(valid_path_from + '/' + c, valid_path_to + '/' + c)
+  link(f'{train_path_from}/{c}', f'{train_path_to}/{c}')
+  link(f'{valid_path_from}/{c}', f'{valid_path_to}/{c}')

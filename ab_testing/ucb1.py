@@ -41,11 +41,11 @@ def run_experiment():
   total_plays = 0
 
   # initialization: play each bandit once
-  for j in range(len(bandits)):
-    x = bandits[j].pull()
+  for bandit in bandits:
+    x = bandit.pull()
     total_plays += 1
-    bandits[j].update(x)
-  
+    bandit.update(x)
+
   for i in range(NUM_TRIALS):
     j = np.argmax([ucb(b.p_estimate, total_plays, b.N) for b in bandits])
     x = bandits[j].pull()
