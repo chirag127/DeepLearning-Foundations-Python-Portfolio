@@ -1,49 +1,17 @@
-# badges.yml
-# Configuration for Shields.io badges used in README.md
-# APEX ARCHITECTURAL STANDARD: Flat Square Style, Chirag127 User Context.
-
-repository_name: "PyLearnHub-ML-Examples-Python-Lib"
-username: "chirag127"
-style: "flat-square"
-
-badges:
-  - name: "Build Status"
-    format: "github-actions"
-    fields: [ "ci", "chirag127/PyLearnHub-ML-Examples-Python-Lib/.github/workflows/ci.yml@main" ]
-    color: "success"
-
-  - name: "Code Coverage"
-    format: "codecov"
-    fields: [ "${{ env.CODECOV_TOKEN }}`, coverage]
-    color: "blue"
-    link: "https://codecov.io/gh/chirag127/PyLearnHub-ML-Examples-Python-Lib"
-
-  - name: "Language"
-    format: "badge"
-    fields: [ "Python", "#3776AB" ]
-    link: "https://www.python.org/"
-
-  - name: "Dependency Manager"
-    format: "badge"
-    fields: [ "uv", "#663399" ]
-    link: "https://github.com/astral-sh/uv"
-
-  - name: "Linter/Formatter"
-    format: "badge"
-    fields: [ "Ruff", "#7638FF" ]
-    link: "https://github.com/charliermarsh/ruff"
-
-  - name: "Testing"
-    format: "badge"
-    fields: [ "Pytest", "#F9A602" ]
-    link: "https://pytest.org/"
-
-  - name: "License"
-    format: "badge"
-    fields: [ "CC BY-NC 4.0", "FF69B4" ]
-    link: "https://github.com/chirag127/PyLearnHub-ML-Examples-Python-Lib/blob/main/LICENSE"
-
-  - name: "GitHub Stars"
-    format: "badge"
-    fields: [ "stars", "chirag127/PyLearnHub-ML-Examples-Python-Lib" ]
-    color: "social"
+build:
+  ci: GitHub Actions
+  url: https://github.com/chirag127/Deep-Learning-Foundations-Hands-On-Python-Code-Portfolio/actions/workflows/ci.yml
+coverage:
+  service: codecov
+  url: https://codecov.io/gh/chirag127/Deep-Learning-Foundations-Hands-On-Python-Code-Portfolio
+license:
+  type: CC BY-NC 4.0
+  url: https://github.com/chirag127/Deep-Learning-Foundations-Hands-On-Python-Code-Portfolio/blob/main/LICENSE
+tech_stack:
+  python: 3.10+
+  linting: ruff
+  testing: pytest
+  packaging: uv
+stars:
+  url: https://img.shields.io/github/stars/chirag127/Deep-Learning-Foundations-Hands-On-Python-Code-Portfolio?style=flat-square
+  count: true
