@@ -1,0 +1,17 @@
+build:
+  ci: GitHub Actions
+  url: https://github.com/chirag127/Deep-Learning-Foundations-Hands-On-Python-Code-Portfolio/actions/workflows/ci.yml
+coverage:
+  service: codecov
+  url: https://codecov.io/gh/chirag127/Deep-Learning-Foundations-Hands-On-Python-Code-Portfolio
+license:
+  type: CC BY-NC 4.0
+  url: https://github.com/chirag127/Deep-Learning-Foundations-Hands-On-Python-Code-Portfolio/blob/main/LICENSE
+tech_stack:
+  python: 3.10+
+  linting: ruff
+  testing: pytest
+  packaging: uv
+stars:
+  url: https://img.shields.io/github/stars/chirag127/Deep-Learning-Foundations-Hands-On-Python-Code-Portfolio?style=flat-square
+  count: true
