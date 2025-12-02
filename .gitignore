@@ -1,5 +1,81 @@
-*.DS_Store
+# Byte-compiled / optimized files
+__pycache__/
 *.pyc
-large_files
-large_files/*
-nlp_class2/chunking/*
+*.pyd
+*.pyo
+*.egg
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+dist/
+*.egg-info/
+*.manifest
+*.spec
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# Dependencies
+# Pip
+.pip/
+pip-wheel-metadata/
+wheels/
+*.whl
+
+# Tests
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs and data
+*.log
+*.log.[0-9]*
+*.sqlite3
+*.db
+*.csv
+*.tsv
+*.json
+data/  # For generated datasets
+output/ # For output files
+
+# Deep Learning Specific
+*.pkl
+*.npy
+*.pt          # PyTorch model files
+*.pth         # PyTorch model files
+*.h5          # Keras/TensorFlow model files
+*.hdf5        # Keras/TensorFlow model files
+checkpoints/  # Model checkpoints
+models/       # Trained models
+runs/         # TensorBoard logs or other experiment runs
+results/      # Experiment results
+tmp/          # Temporary files
+wandb/        # Weights & Biases logs
+
+# Jupyter Notebook specific
+.ipynb_checkpoints/
+
+# Editors and IDEs
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
