@@ -1,0 +1,47 @@
+name: Continuous Integration
+
+# This workflow is built for the 'Deep-Learning-Foundations-Hands-On-Python-Code-Portfolio' repository.
+# It enforces Python 3.10+ standards, using uv for package management, Ruff for linting, and Pytest for testing.
+# Adheres to Apex Technical Authority standards for robust CI/CD.
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🚀 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🐍 Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'uv'
+
+      - name: 📦 Install Dependencies with uv
+        run: |
+          python -m uv || python3 -m uv
+          uv --version
+          uv install --frozen-lockfile --no-cache-dir
+
+      - name: 🧹 Linting with Ruff
+        run: |
+          uv exec ruff check . --output-format=github
+          uv exec ruff format . --check
+
+      - name: 🧪 Testing with Pytest
+        run: |
+          uv exec pytest --cov=./ --cov-report=xml
+
+      - name: 📊 Upload Coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage.xml
+          fail_ci_if_error: true
